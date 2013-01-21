@@ -7,4 +7,4 @@
 //= require_tree ./routes
 //= require_self
 
-SocialPremia.initialize();
+SocialAwards.initialize();

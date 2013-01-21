@@ -16,9 +16,5 @@
 //= require ember
 //= require ember-data
 //= require_self
-//= require social_premia
-SocialPremia = Ember.Application.create();
-//= require_tree .
-//
-//= require ember
-//= require ember/app
+//= require social_awards
+SocialAwards = Ember.Application.create();

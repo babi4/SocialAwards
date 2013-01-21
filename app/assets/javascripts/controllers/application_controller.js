@@ -1,3 +1,3 @@
-SocialPremia.ApplicationController = Ember.Controller.extend({
+SocialAwards.ApplicationController = Ember.Controller.extend({
 
 });

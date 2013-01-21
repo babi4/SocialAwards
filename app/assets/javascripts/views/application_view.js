@@ -1,3 +1,3 @@
-SocialPremia.ApplicationView = Ember.View.extend({
+SocialAwards.ApplicationView = Ember.View.extend({
   templateName: 'application'
 });
