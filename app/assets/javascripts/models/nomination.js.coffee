@@ -1,3 +1,5 @@
 SocialAwards.Nomination = Em.Object.extend({
-  name: 1111,
+  url : (() ->
+    "/nomination/#{@.get 'id'}"
+  ).property 'id'
 });
