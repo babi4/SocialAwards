@@ -4,7 +4,8 @@ class Nominees
     if nomination.nominees_type == 'user'
       @nominees_class = User
     else
-      @nominees_class = Public
+      throw "nominees_type #{nomination.nominees_type} not implemented"
+#      @nominees_class = Public
     end
   end
 
@@ -34,3 +35,8 @@ class Nominees
 
 
 end
+
+#TODO
+#1 add nominees_type column (rename voting_type)
+#2 add Users
+#2 add fetch_by_ids in User class
