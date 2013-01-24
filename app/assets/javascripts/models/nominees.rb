@@ -20,7 +20,7 @@ class Nominees
     return [] if page < 0
     offset = page * nominees_per_page
     $redis.zrevrangebyscore "nomination:#{@nomination.id}:nominants", '+inf', 0, {
-        :limit => [offset, @nominees_per_page],
+          :limit => [offset, @nominees_per_page],
         :withscores => true
     }
   end
@@ -37,6 +37,5 @@ class Nominees
 end
 
 #TODO
-#1 add nominees_type column (rename voting_type)
 #2 add Users
 #2 add fetch_by_ids in User class

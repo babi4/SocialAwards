@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130117214207) do
+ActiveRecord::Schema.define(:version => 20130124165851) do
 
   create_table "awards", :force => true do |t|
     t.string   "name",                   :null => false
@@ -25,12 +25,13 @@ ActiveRecord::Schema.define(:version => 20130117214207) do
   end
 
   create_table "nominations", :force => true do |t|
-    t.string   "name",               :null => false
-    t.string   "voting_type",        :null => false
+    t.string   "name",                                   :null => false
+    t.string   "voting_type",                            :null => false
     t.string   "voting_constraints"
     t.integer  "award_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                             :null => false
+    t.datetime "updated_at",                             :null => false
+    t.string   "nominees_type",      :default => "user", :null => false
   end
 
 end
