@@ -1,1 +1,1 @@
-$redis = Redis.new(:host => 'localhost', :port => 6379, :db => 'SocialAward')
+$redis = Redis.new(:host => 'localhost', :db => 'SocialAward')

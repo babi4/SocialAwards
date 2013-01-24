@@ -22,6 +22,8 @@ end
 
 gem 'jquery-rails'
 
+gem 'omniauth'
+gem 'omniauth-vkontakte'
 
 gem 'devise'
 
