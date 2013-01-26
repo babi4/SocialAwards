@@ -7,14 +7,12 @@ class NominationsController < ApplicationController
   end
 
   def show
-    @nomination
+    @nomination_hash = @nomination.get_hash_with_nominees()
   end
 
 
   def find_nomination
     @nomination = Nomination.find params[:id]
-    @nomination_hash = @nomination.get_hash_with_nominees()
-
   end
 
 end

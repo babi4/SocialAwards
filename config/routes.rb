@@ -15,6 +15,8 @@ SocialPremia::Application.routes.draw do
   # Sample resource route (maps HTTP verbs to controller actions automatically):
   # 
   resources :nominations, :only => [:show] #index from main
+  resources :nominees, :only => [:show] #index from main
+
 
   # Sample resource route with options:
   #   resources :products do

@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   # 
   
 
-  def self.fetch_by_arr(ids=[])
+  def self.fetch_by_ids(ids=[])
     users_table = User.arel_table
     User.where users_table[:id].in ids
   end

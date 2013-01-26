@@ -14,7 +14,7 @@ class Nominees
   def get(page=0)
     get_ids page
     return [] if page > 0
-    fetch_nominees nominees_ids_to_scores.keys
+    fetch_nominees @nominees_ids_to_scores.keys
     merge_nominees_and_scores
   end
 
@@ -22,8 +22,8 @@ class Nominees
     page = page.to_i
     return [] if page < 0
     offset = page * nominees_per_page
-    nominees_a = $redis.zrevrangebyscore "nomination:#{@nomination.id}:nominants", '+inf', 0, {
-          :limit => [offset, @nominees_per_page],
+    nominees_a = $redis.zrevrangebyscore @nomination.sset_name, '+inf', 0, {
+        :limit => [offset, @nominees_per_page],
         :withscores => true
     }
     nominees = {}
