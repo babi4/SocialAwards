@@ -1,4 +1,4 @@
-SocialAwards.NominationsController = Em.ArrayProxy.create
+SocialAwards.NominationsController = Em.ArrayProxy.extend
   content: []
 
   createNomination: (nomination) ->

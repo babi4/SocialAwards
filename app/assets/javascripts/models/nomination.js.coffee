@@ -1,4 +1,4 @@
-SocialAwards.Nomination = Em.Object.extend({
+SocialAwards.Nomination = DS.Model.extend({
   url : (() ->
     "/nominations/#{@.get 'id'}"
   ).property 'id'
@@ -7,8 +7,9 @@ SocialAwards.Nomination = Em.Object.extend({
 
 SocialAwards.Nomination.reopenClass({
   find: (id) ->
-    nom = SocialAwards.Nomination.create name : 'test', id : id
-    nom
+    #TODO here
+    #@_super()
+
   findAll: () ->
     console.log "CALL FIND ALL"
 });

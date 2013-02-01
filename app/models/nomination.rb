@@ -1,8 +1,5 @@
 class Nomination < ActiveRecord::Base
-  # attr_accessible :title, :body
-  # 
-  # 
-  # 
+  attr_accessible :name, :voting_type, :voting_constraints, :award_id
   
   def get_hash_with_nominees(page=0)
     self.serializable_hash.merge(:nominees => Nominees.new(self).get)
