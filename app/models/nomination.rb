@@ -1,5 +1,7 @@
 class Nomination < ActiveRecord::Base
   attr_accessible :name, :voting_type, :voting_constraints, :award_id
+
+#  self.include_root_in_json = true
   
   def get_hash_with_nominees(page=0)
     self.serializable_hash.merge(:nominees => Nominees.new(self).get)

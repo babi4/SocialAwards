@@ -1,5 +1,5 @@
 <ul>
-  {{#each view.items}}
-  	{{view  SocialAwards.NominationView }}
+  {{#each nomination in controller}}
+  	<a {{bindAttr href="nomination.url"}} > {{ nomination.name}} </a>
   {{/each}}
 </ul>
