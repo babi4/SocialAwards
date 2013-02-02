@@ -1,3 +1,13 @@
 <div>
-	{{ name }}
+  {{ name }}
+
+
+  {{#each nominee in nominees}}
+    {{ nominee }}
+  {{else}}
+    NOBODY NOMINEES
+  {{/each}}
+
+
+
 </div>
