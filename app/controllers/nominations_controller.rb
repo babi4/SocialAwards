@@ -9,8 +9,10 @@ class NominationsController < ApplicationController
   end
 
   def show
-    @nomination_hash = @nomination.get_hash_with_nominees()
-    respond_with :nomination => @nomination_hash
+    nominees_hash = @nomination.get_nominees_hash
+#    @nomination_hash = @nominatio
+    nomination_hash = @nomination.serializable_hash.merge :nominees => nominees_hash.keys
+    respond_with :nomination => nomination_hash, :nominees => nominees_hash.values 
   end
 
 

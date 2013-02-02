@@ -3,9 +3,10 @@ class Nomination < ActiveRecord::Base
 
 #  self.include_root_in_json = true
   
-  def get_hash_with_nominees(page=0)
+  def get_nominees_hash(page=0)
 #    self.serializable_hash.merge(:nominees => Nominees.new(self).get)
-    self.serializable_hash.merge(:nominees => [id:1, name: 'test'])
+#    self.serializable_hash.merge(:nominees => [id:1, name: 'test'])
+    {2 => {id: 2, name: 'test'}}
     
   end
 

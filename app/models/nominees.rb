@@ -16,6 +16,7 @@ class Nominees
     return [] if page > 0
     fetch_nominees @nominees_ids_to_scores.keys
     merge_nominees_and_scores
+    return_hash
   end
 
   def get_ids(page=0)
@@ -44,6 +45,15 @@ class Nominees
       nominee.serializable_hash.merge(:score => nominees_ids_to_scores[nominee.id])          
     end
   end
+
+  def return_hash
+    hsh = Hash.new
+    @nominees.each do |nominees|
+      hsh[nominees.id] = nominees
+    end
+    hsh
+  end
+
 
   def nominees_per_page
     10
