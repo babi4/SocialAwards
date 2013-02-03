@@ -10,6 +10,11 @@ SocialAwards.NominationsRoute = Ember.Route.extend
   model : () ->
     SocialAwards.Nomination.find()
 
+SocialAwards.ApplicationRoute = Ember.Route.extend
+  setupController: () ->
+    console.log window.current_user
+    @controllerFor('auth').set 'current_user', window.current_user
+
 
 
 #SocialAwards.NominationRoute = Ember.Route.extend

@@ -1,0 +1,7 @@
+{{#if current_user }}
+	Hello {{current_user.first_name}}
+{{else}}
+  <a href='http://localhost:8080/users/auth/vkontakte'>
+    "PLEASE LOG IN!"
+  </a>
+{{/if}}
