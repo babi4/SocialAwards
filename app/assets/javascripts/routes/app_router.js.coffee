@@ -12,7 +12,6 @@ SocialAwards.NominationsRoute = Ember.Route.extend
 
 SocialAwards.ApplicationRoute = Ember.Route.extend
   setupController: () ->
-    console.log window.current_user
     @controllerFor('auth').set 'current_user', window.current_user
 
 

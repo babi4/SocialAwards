@@ -15,9 +15,23 @@ class Nomination < ActiveRecord::Base
     "nomination:#{self.id}:nominants"
   end
 
+#  def nominee_nomnations_set_name
+#      "nomination:#{self.id}:nominants"    
+#  end
 
 
+  def get_nominee_score(n_id)
+    $redis.zscore sset_name, n_id
+  end
 
+
+  def nominate(nominee)
+    res = $redis.pipelined do
+      $redis.sadd "nominee:#{nominee.screen_name}:nominations", self.id
+      $redis.zadd sset_name, 0, nominee.id
+    end
+    res.last
+  end
 
   def self.find_nominatios_with_nominee_json(screen_name, id)
     nomination_ids = $redis.smembers "nominee:#{screen_name}:nominations"
@@ -38,3 +52,5 @@ class Nomination < ActiveRecord::Base
   end
 
 end
+
+#TODO create nominee object

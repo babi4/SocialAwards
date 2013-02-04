@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def renderOK(data={})
-    render :json => {:error => false}.merge(data)
+    render :json => {:error => false, :data => data}
   end
 
   def renderErr(message="Ooops. Something is going wrong")

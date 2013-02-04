@@ -48,8 +48,8 @@ class Nominees
 
   def return_hash
     hsh = Hash.new
-    @nominees.each do |nominees|
-      hsh[nominees.id] = nominees
+    @nominees.each do |nominee|
+      hsh[nominee.id] = nominee
     end
     hsh
   end
