@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :omniauthable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :uid, :provider, :email, :password, :password_confirmation, :remember_me, :first_name, :second_name, :nickname, :screen_name, :sex, :bdate
+  attr_accessible :uid, :provider, :email, :password, :password_confirmation, :remember_me, :first_name, :second_name, :nickname, :screen_name, :sex, :bdate, :expires, :expires_at, :token
   # attr_accessible :title, :body
   # 
   # 
@@ -27,6 +27,9 @@ class User < ActiveRecord::Base
                          screen_name: auth.extra.raw_info.screen_name,
                          sex:         auth.extra.raw_info.sex,
                          bdate:       auth.extra.raw_info.bdate,
+                         expires:     auth.credentials.expires,
+                         expires_at:  (Time.at auth.credentials.expires_at),
+                         token:       auth.credentials.token
                         )
     end
     user

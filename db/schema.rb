@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130203192913) do
+ActiveRecord::Schema.define(:version => 20130204193454) do
 
   create_table "awards", :force => true do |t|
     t.string   "name",                   :null => false
@@ -37,7 +37,8 @@ ActiveRecord::Schema.define(:version => 20130203192913) do
   create_table "people", :force => true do |t|
     t.integer  "uid",                         :null => false
     t.string   "first_name",  :default => "", :null => false
-    t.string   "second_name", :default => "", :null => false
+    t.string   "last_name",   :default => "", :null => false
+    t.string   "screen_name",                 :null => false
     t.integer  "sex",                         :null => false
     t.string   "bdate",       :default => "", :null => false
     t.datetime "created_at",                  :null => false
@@ -61,6 +62,9 @@ ActiveRecord::Schema.define(:version => 20130203192913) do
     t.datetime "created_at",                          :null => false
     t.datetime "updated_at",                          :null => false
     t.string   "provider"
+    t.string   "token",                               :null => false
+    t.boolean  "expires",                             :null => false
+    t.date     "expires_at",                          :null => false
   end
 
 end

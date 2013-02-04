@@ -1,5 +1,6 @@
 class OmniauthCallbacksController < ApplicationController
   def vkontakte
+    puts request.env["omniauth.auth"].inspect
     @user = User.find_for_vkontakte_oauth(request.env["omniauth.auth"], current_user)
     if @user.persisted?
       sign_in_and_redirect @user, :event => :authentication
