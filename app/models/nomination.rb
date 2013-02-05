@@ -39,18 +39,18 @@ class Nomination < ActiveRecord::Base
   end
 
 
-  def self.fetch_by_ids_with_score_json(ids=[], nominee_id)
+  def self.fetch_by_ids_with_score_json(ids, nominee_id)
     nominations = fetch_by_ids ids
     nominations.each do |nomination|
       nomination.serializable_hash.merge(:score => nomination.get_nominee_score(nominee_id))
     end
   end
 
+
   def self.fetch_by_ids(ids=[])
     nominations_table = User.arel_table
     Nomination.where nominations_table[:id].in ids
   end
-
 end
 
 #TODO create nominee object

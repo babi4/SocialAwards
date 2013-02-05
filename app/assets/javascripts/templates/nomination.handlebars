@@ -3,12 +3,18 @@
   <br>
   {{ render nominate_form }}
   <ul>
-  {{#each nominee in nominees}}
+
+
+
+  {{#each nominee_data in nominees}}
     <li>
-    {{ nominee.name }}
+    {{ nominee_data.name }} - {{ nominee_data.score }}
     </li>
   {{else}}
     NOBODY NOMINEES
   {{/each}}
+
+
+
   </ul>
 </div>

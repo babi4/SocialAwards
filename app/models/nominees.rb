@@ -4,7 +4,7 @@ class Nominees
     @nominees = []
     @nominees_ids_to_scores = {}
     if nomination.nominees_type == 'user'
-      @nominees_class = User
+      @nominees_class = Person
     else
       throw "nominees_type #{nomination.nominees_type} not implemented"
 #      @nominees_class = Public
@@ -13,7 +13,8 @@ class Nominees
 
   def get(page=0)
     get_ids page
-    return [] if page > 0
+    return {} if page < 0
+    puts @nominees_ids_to_scores
     fetch_nominees @nominees_ids_to_scores.keys
     merge_nominees_and_scores
     return_hash
@@ -21,16 +22,20 @@ class Nominees
 
   def get_ids(page=0)
     page = page.to_i
-    return [] if page < 0
+    if page < 0
+      @nominees_ids_to_scores = {}
+      return
+    end
     offset = page * nominees_per_page
     nominees_a = $redis.zrevrangebyscore @nomination.sset_name, '+inf', 0, {
-        :limit => [offset, @nominees_per_page],
+        :limit => [offset, nominees_per_page],
         :withscores => true
     }
     nominees = {}
-    nominees_a.in_groups_of(2) do |array|
-      nominee_id = array.first.to_i
-      score     = array.last.to_i
+
+    nominees_a.each do |nominee|
+      nominee_id = nominee.first.to_i
+      score     = nominee.last.to_i
       nominees[nominee_id] = score
     end
     @nominees_ids_to_scores = nominees
@@ -41,15 +46,16 @@ class Nominees
   end
 
   def merge_nominees_and_scores
-    @nominees.each do |nominee|
-      nominee.serializable_hash.merge(:score => nominees_ids_to_scores[nominee.id])          
+    @nominees = @nominees.map do |nominee|
+      puts nominee
+      nominee.serializable_hash.merge(:score => @nominees_ids_to_scores[nominee.id])          
     end
   end
 
   def return_hash
     hsh = Hash.new
     @nominees.each do |nominee|
-      hsh[nominee.id] = nominee
+      hsh[nominee['id']] = nominee
     end
     hsh
   end

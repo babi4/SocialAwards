@@ -10,4 +10,10 @@ class Person < ActiveRecord::Base
   def self.fetch_data_from_snetwork uid
     Vkclient.fetch_profile uid
   end
+
+  def self.fetch_by_ids(ids=[])
+    ar_table = self.arel_table
+    self.where ar_table[:id].in ids
+  end
+
 end

@@ -12,8 +12,8 @@ class User < ActiveRecord::Base
   
 
   def self.fetch_by_ids(ids=[])
-    users_table = User.arel_table
-    User.where users_table[:id].in ids
+    users_table = self.arel_table
+    self.where users_table[:id].in ids
   end
 
   def self.find_for_vkontakte_oauth(auth, signed_in_resource=nil)
