@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130204193454) do
+ActiveRecord::Schema.define(:version => 20130206184041) do
 
   create_table "awards", :force => true do |t|
     t.string   "name",                   :null => false
@@ -65,6 +65,15 @@ ActiveRecord::Schema.define(:version => 20130204193454) do
     t.string   "token",                               :null => false
     t.boolean  "expires",                             :null => false
     t.date     "expires_at",                          :null => false
+  end
+
+  create_table "votes", :force => true do |t|
+    t.integer "award_id",      :null => false
+    t.integer "nomination_id", :null => false
+    t.integer "user_id",       :null => false
+    t.integer "nominee_id",    :null => false
+    t.string  "nominee_type",  :null => false
+    t.date    "created_at",    :null => false
   end
 
 end

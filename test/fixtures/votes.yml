@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  nomination_id: MyString
+  : MyString
+  integer: MyString
+  user_id: MyString
+  : MyString
+  integer: MyString
+
+two:
+  nomination_id: MyString
+  : MyString
+  integer: MyString
+  user_id: MyString
+  : MyString
+  integer: MyString
