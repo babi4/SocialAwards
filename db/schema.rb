@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130206184041) do
+ActiveRecord::Schema.define(:version => 20130207175552) do
 
   create_table "awards", :force => true do |t|
     t.string   "name",                   :null => false
@@ -74,6 +74,7 @@ ActiveRecord::Schema.define(:version => 20130206184041) do
     t.integer "nominee_id",    :null => false
     t.string  "nominee_type",  :null => false
     t.date    "created_at",    :null => false
+    t.integer "score",         :null => false
   end
 
 end

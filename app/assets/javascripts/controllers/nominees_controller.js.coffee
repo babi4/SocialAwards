@@ -14,3 +14,6 @@ SocialAwards.NomineesController = Ember.ArrayController.extend
     else
       alert "Залогинься мудило"
       return
+
+  after_vote: () -> 
+    
