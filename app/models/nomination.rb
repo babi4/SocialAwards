@@ -64,7 +64,7 @@ class Nomination < ActiveRecord::Base
   #TODO to nominee object
   def add_score(nominee, vote_score)
     return false unless nominee
-    if $redis.smemeber nominee.nominations_set_name, self.id
+    if $redis.sismember nominee.nominations_set_name, self.id
       $redis.zincrby sset_name, vote_score, nominee.id
     else
       return false

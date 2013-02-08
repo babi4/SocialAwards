@@ -10,12 +10,13 @@ class VoteController < ApplicationController
     new_score = @nomination.add_score @nominee, @vote_score
     if new_score
       Vote.create({
-        :award_id => @award,
+        :award_id => @award.id,
+        :nomination => @nomination,
         :user_id  => current_user.id,
         :nominee => @nominee,
         :score => @vote_score
       })
-      renderOk :new_score => new_score
+      renderOK :new_score => new_score
     else
       renderErr "failed to vote"
     end

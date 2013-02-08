@@ -12,10 +12,15 @@ SocialAwards.NomineesController = Ember.ArrayController.extend
           nominee_id    : nominee.get 'id'
           vote_score    :  1
       .success (resp) =>
-        @after_vote()
+        if resp.error is false
+          @after_vote(resp.data, nominee)
+        else
+          alert "Vote error: #{resp.error}"
+
     else
       alert "Залогинься мудило"
       return
 
-  after_vote: () -> 
-    console.log "VOTED"
+  after_vote: (data, nominee) -> 
+    window.n = nominee
+    nominee.set 'score', data.new_score

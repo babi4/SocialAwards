@@ -1,5 +1,9 @@
 class Vote < ActiveRecord::Base
-  attr_accessible :award_id, :user_id, :score
+  attr_accessible :award_id, :user_id, :score, :nomination, :nominee
+
+  belongs_to :nominee, :polymorphic => true
+  belongs_to :nomination
+
 end
 
   # t.integer "award_id",      :null => false

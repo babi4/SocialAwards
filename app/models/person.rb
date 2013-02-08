@@ -1,5 +1,8 @@
 class Person < ActiveRecord::Base
   attr_accessible :uid, :first_name, :last_name, :nickname, :sex, :bdate, :screen_name
+
+  has_many :votes, :as => :nominee
+
   # 
   def self.create_by_uid(uid)
     p_data = fetch_data_from_snetwork(uid)
