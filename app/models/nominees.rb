@@ -3,12 +3,7 @@ class Nominees
     @nomination = nomination
     @nominees = []
     @nominees_ids_to_scores = {}
-    if nomination.nominees_type == 'user'
-      @nominees_class = Person
-    else
-      throw "nominees_type #{nomination.nominees_type} not implemented"
-#      @nominees_class = Public
-    end
+    @nominees_class = nomination.nominee_model
   end
 
   def get(page=0)

@@ -16,6 +16,7 @@ class Vkclient
 
     request = Net::HTTP::Get.new(uri.request_uri)
     response = http.request(request)
+    puts response.body
     body = JSON.parse response.body
     if body["error"]
       #LOG ERROR

@@ -9,7 +9,8 @@ SocialAwards.NomineesController = Ember.ArrayController.extend
         url : '/vote'
         data :
           nomination_id : nomination.id
-          nominee_id    :  1
+          nominee_id    : nominee.get 'id'
+          vote_score    :  1
       .success (resp) =>
         @after_vote()
     else

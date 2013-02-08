@@ -20,4 +20,9 @@ class Person < ActiveRecord::Base
     self.where ar_table[:id].in ids
   end
 
+
+  def nominations_set_name
+    "nominee:#{self.screen_name}:nominations"
+  end
+
 end

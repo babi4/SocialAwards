@@ -1,12 +1,24 @@
 class VoteController < ApplicationController
-  before_action :find_award
-  before_action :find_nomination
-  before_action :find_user
-  before_action :find_nominee
-  before_action :get_score
+  before_filter :find_award
+  before_filter :find_nomination
+  before_filter :find_user
+  before_filter :find_nominee
+  before_filter :get_score
 
   def create
-
+    #TODO think about votes save
+    new_score = @nomination.add_score @nominee, @vote_score
+    if new_score
+      Vote.create({
+        :award_id => @award,
+        :user_id  => current_user.id,
+        :nominee => @nominee,
+        :score => @vote_score
+      })
+      renderOk :new_score => new_score
+    else
+      renderErr "failed to vote"
+    end
   end
 
   def find_award
@@ -14,7 +26,7 @@ class VoteController < ApplicationController
   end
 
   def find_nomination
-    @find_nomination = Nomination.find params[:nomination_id]
+    @nomination = Nomination.find params[:nomination_id]
   end
 
 
@@ -27,11 +39,13 @@ class VoteController < ApplicationController
   end
 
   def find_nominee
-    
+    @nominee = @nomination.nominee_model.find params[:nominee_id]
   end
 
   def get_score
-    
+    #TODO check vote score
+    @vote_score = params[:vote_score] 
+    renderErr "vote_score required " unless @vote_score 
   end
 
 

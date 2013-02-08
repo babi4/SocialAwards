@@ -15,7 +15,7 @@ SocialPremia::Application.routes.draw do
   # 
   resources :nominations, :only => [:index, :show] #index from main
   resources :nominees, :only    => [:show, :create] #index from main
-  resources :votes, :only       => [:create]
+  resources :vote, :only       => [:create]
 
   # Sample resource route with options:
   #   resources :products do

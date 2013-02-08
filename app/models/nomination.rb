@@ -18,6 +18,15 @@ class Nomination < ActiveRecord::Base
 #  def nominee_nomnations_set_name
 #      "nomination:#{self.id}:nominants"    
 #  end
+#  
+#  
+  def nominee_model
+    if self.nominees_type == 'user'
+      Person
+    else
+      throw "nominees_type #{nomination.nominees_type} not implemented"
+    end
+  end
 
 
   def get_nominee_score(n_id)
@@ -27,7 +36,7 @@ class Nomination < ActiveRecord::Base
 
   def nominate(nominee)
     res = $redis.pipelined do
-      $redis.sadd "nominee:#{nominee.screen_name}:nominations", self.id
+      $redis.sadd nominee.nominations_set_name, self.id #TODO maybe use id
       $redis.zadd sset_name, 0, nominee.id
     end
     res.last
@@ -51,6 +60,19 @@ class Nomination < ActiveRecord::Base
     nominations_table = User.arel_table
     Nomination.where nominations_table[:id].in ids
   end
+
+  #TODO to nominee object
+  def add_score(nominee, vote_score)
+    return false unless nominee
+    if $redis.smemeber nominee.nominations_set_name, self.id
+      $redis.zincrby sset_name, vote_score, nominee.id
+    else
+      return false
+    end
+  end
+
+
+
 end
 
 #TODO create nominee object
