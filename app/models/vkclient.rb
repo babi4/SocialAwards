@@ -16,7 +16,13 @@ class Vkclient
 
     request = Net::HTTP::Get.new(uri.request_uri)
     response = http.request(request)
-    (JSON.parse response.body)['response']
+    body = JSON.parse response.body
+    if body["error"]
+      #LOG ERROR
+      false
+    else
+      body['response']
+    end
   end
 
   def self.access_token

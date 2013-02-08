@@ -2,9 +2,13 @@ class Person < ActiveRecord::Base
   attr_accessible :uid, :first_name, :last_name, :nickname, :sex, :bdate, :screen_name
   # 
   def self.create_by_uid(uid)
-    p_data = fetch_data_from_snetwork(uid).first
-    puts p_data
-    self.create p_data.except(:nickname)
+    p_data = fetch_data_from_snetwork(uid)
+    puts p_data.inspect
+    if p_data
+      self.create p_data.first.except(:nickname)
+    else
+      false
+    end
   end
 
   def self.fetch_data_from_snetwork uid

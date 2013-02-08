@@ -14,12 +14,16 @@ class VoteController < ApplicationController
   end
 
   def find_nomination
-    
+    @find_nomination = Nomination.find params[:nomination_id]
   end
 
 
   def find_user
-    
+    if current_user
+      current_user
+    else
+      renderErr "Log in plz"
+    end
   end
 
   def find_nominee

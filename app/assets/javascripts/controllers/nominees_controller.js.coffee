@@ -6,9 +6,10 @@ SocialAwards.NomineesController = Ember.ArrayController.extend
     if user
       jQuery.ajax
         type : "POST"
-        url : 'vote'
+        url : '/vote'
         data :
           nomination_id : nomination.id
+          nominee_id    :  1
       .success (resp) =>
         @after_vote()
     else
@@ -16,4 +17,4 @@ SocialAwards.NomineesController = Ember.ArrayController.extend
       return
 
   after_vote: () -> 
-    
+    console.log "VOTED"

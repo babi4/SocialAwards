@@ -11,16 +11,20 @@ class NomineesController < ApplicationController
 
   def create
     nominee_model = get_nominee_model
-    nominee = nominee_model.where(:uid => @uid).first
+    nominee = nominee_model.where(:uid => @uid).try :first
     unless nominee
-      nominee = nominee_model.create_by_uid @uid
+        nominee = nominee_model.create_by_uid @uid
     end
-    nominee_score = @nomination.get_nominee_score nominee.id
-    if nominee_score
-      renderOK :status => 'already_nominated'
+    if nominee
+      nominee_score = @nomination.get_nominee_score nominee.id
+      if nominee_score
+        renderOK :status => 'already_nominated'
+      else
+        score = @nomination.nominate nominee
+        renderOK :status => 'nominated', :nominee => nominee.serializable_hash.merge(:score => score)
+      end
     else
-      score = @nomination.nominate nominee
-      renderOK :status => 'nominated', :nominee => nominee.serializable_hash.merge(:score => score)
+      renderErr "Can't find/create nominee"
     end
   end
 
