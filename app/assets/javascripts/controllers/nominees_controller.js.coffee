@@ -23,4 +23,4 @@ SocialAwards.NomineesController = Ember.ArrayController.extend
 
   after_vote: (data, nominee) -> 
     window.n = nominee
-    nominee.set 'score', data.new_score
+    nominee.update_score data.new_score

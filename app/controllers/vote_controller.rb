@@ -16,6 +16,7 @@ class VoteController < ApplicationController
         :nominee => @nominee,
         :score => @vote_score
       })
+      FayeMessage.new(:new_vote, nomination_id: @nomination.id, nominee_id: @nominee.id, new_score: new_score).send
       renderOK :new_score => new_score
     else
       renderErr "failed to vote"

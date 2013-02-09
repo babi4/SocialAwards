@@ -27,7 +27,9 @@ gem 'omniauth-vkontakte'
 
 gem 'devise'
 
-
+gem 'thin' #WHY?
+gem 'faye'
+gem 'foreman'
 
 gem "ember-rails", '~> 0.9.2'
 # To use ActiveModel has_secure_password

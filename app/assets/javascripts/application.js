@@ -17,4 +17,5 @@
 //= require ember-data
 //= require_self
 //= require social_awards
+//= require faye_js_controller
 SocialAwards = Ember.Application.create();

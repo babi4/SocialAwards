@@ -5,6 +5,9 @@ SocialAwards.Nomination = DS.Model.extend({
   url : (() ->
     "/nominations/#{@.get 'id'}"
   ).property 'id'
+
+  subscribe_channel: () ->
+    "/nomination/#{@.get 'id'}"
 });
 
 
