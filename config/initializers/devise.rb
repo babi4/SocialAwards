@@ -216,7 +216,7 @@ Devise.setup do |config|
   # 
   # 
   require "omniauth-vkontakte"
-  config.omniauth :vkontakte, '3401502', 'WDVuXeNgXcKc4FsQKTkI', :scope => 'user,public_repo'
+  config.omniauth :vkontakte, '3401502', 'WDVuXeNgXcKc4FsQKTkI', :scope => 'notify,friends,wall,groups,offline', :display => 'page'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

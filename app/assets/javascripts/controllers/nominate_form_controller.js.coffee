@@ -1,7 +1,10 @@
 SocialAwards.NominateFormController = Ember.Controller.extend
   nominate_value : ""
+  variants: []
 
-  nominate : () ->
+
+  send_nominate : (uid) ->
+    return false unless uid
     user = @controllerFor('auth').get 'current_user'
     if user
       nomination = @controllerFor('nomination').get 'model'
@@ -11,7 +14,7 @@ SocialAwards.NominateFormController = Ember.Controller.extend
         url  : '/nominees'
         data : 
           nomination_id : nomination.get 'id'
-          uid : @get 'nominate_value'
+          uid : uid
       .success (resp) => 
         if resp.error is false
           @add_nominee resp.data.nominee, nomination
@@ -24,10 +27,32 @@ SocialAwards.NominateFormController = Ember.Controller.extend
 
   add_nominee: (nominee, nomination) ->
     SocialAwards.Nominee.createRecord
-      id         : nominee.id
+      id         : nominee.id + ""
       first_name : nominee.first_name
       last_name  : nominee.last_name
       score      : 0
       nomination : nomination #USE FIND AND ID
-    console.log nominee
 
+  fetch_variants: () ->
+    text = @get 'nominate_value'
+    return false if text is ""
+    user = @controllerFor('auth').get 'current_user'
+    return false unless user
+    token = user.token
+    SocialAwards.VKclient.get_users text, @fill_variants, this, token
+
+  fill_variants: (total, variants) ->
+    variants_arr = []
+    for variant in variants
+      console.log variant
+      sv = (new SocialAwards.SearchVariant).setProperties variant
+      variants_arr.push sv
+    @set 'variants', variants_arr
+
+  nominate: (searchVariant) ->
+    @send_nominate searchVariant.get 'uid'
+    @clear_form()
+
+  clear_form: ->
+    @set 'variants', []
+    @set 'nominate_value', ""

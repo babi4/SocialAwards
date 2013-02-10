@@ -1,4 +1,11 @@
 <form>
   {{view Ember.TextField valueBinding="nominate_value"}}
-  <input type="submit" value="Nominate" {{action nominate}}>
+  <br >
+
+  {{#each variant in variants }}
+    <a href='#' {{action 'nominate'variant }} > {{ variant.name }} </a>
+    <br>
+  {{/each}}
+
+
 </form>

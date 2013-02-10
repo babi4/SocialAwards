@@ -4,7 +4,7 @@ SocialAwards.Router = Ember.Router.extend
 SocialAwards.Router.map () ->
   @resource 'nominations'
   @resource 'nomination', path: '/nominations/:nomination_id'
-
+  #TODO make it nested ^^
 
 SocialAwards.NominationsRoute = Ember.Route.extend
   model : () ->

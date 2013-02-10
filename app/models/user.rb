@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   end
 
   def self.find_for_vkontakte_oauth(auth, signed_in_resource=nil)
+    puts auth.inspect
     user = User.where(:provider => auth.provider, :uid => auth.uid).first
     unless user
       user = User.create(uid:         auth.uid,
@@ -36,3 +37,5 @@ class User < ActiveRecord::Base
   end
 
 end
+
+#TODO ignore expires_at field
