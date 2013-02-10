@@ -17,6 +17,6 @@ SocialAwards.ApplicationRoute = Ember.Route.extend
 
 
 SocialAwards.NominationRoute = Ember.Route.extend
-  setupController: () ->
-    callback = @controllerFor('nominations').faye_callback.bind @controllerFor('nominations')
-    SocialAwards.FayeClient.subscribe @currentModel.subscribe_channel(), callback
+  setupController: (controller, model) ->
+    callback = controller.faye_callback.bind controller
+    SocialAwards.FayeClient.subscribe model.subscribe_channel(), callback
