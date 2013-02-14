@@ -19,7 +19,7 @@ class Vkclient
     puts response.body
     body = JSON.parse response.body
     if body["error"]
-      #LOG ERROR
+      #TODO LOG ERROR
       false
     else
       body['response']
@@ -27,7 +27,6 @@ class Vkclient
   end
 
   def self.access_token
-#   TODO get_access_token
     "access_token=72ac21244d5ce2470be58cc00e9aefe9b7032ee5141409ed575821e25e296a66a682ce9962a6c302a0545"
   end
 

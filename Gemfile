@@ -42,7 +42,11 @@ gem "ember-rails", '~> 0.9.2'
 gem 'unicorn'
 
 # Deploy with Capistrano
-# gem 'capistrano'
+gem 'capistrano'
+gem 'rvm-capistrano'
+gem 'capistrano_colors'
+gem 'god'
+
 
 # To use debugger
 # gem 'debugger'

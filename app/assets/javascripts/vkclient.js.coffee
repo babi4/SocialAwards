@@ -25,7 +25,9 @@ class VKrequest
     "SocialAwards.VKclient.#{name}"
 
   parse_users_result: (result) ->
-    #TODO check error or empty
+    if result.error
+      #TODO  if token expired -> log out
+      alert result.error.error_msg
     total = result.response.shift()
     users = result.response
     @clb.call @clb_context, total, users
