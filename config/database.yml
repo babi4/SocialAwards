@@ -51,5 +51,5 @@ production:
   encoding: unicode
   database: social_awards_production
   pool: 5
-  username: dbuser
-  password: 267809
+  username: postgres
+  password: 1234567
