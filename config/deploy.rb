@@ -50,10 +50,10 @@ after "deploy:update", "deploy:cleanup"
 
 namespace :symlinks do
   task :set, :roles => :app  do
-    run "rm -f #{current_release}/config/database.yml"
-    run "ln -s #{deploy_to}/shared/config/database.yml #{current_release}/config/database.yml"
+#    run "rm -f #{current_release}/config/database.yml"
+#    run "ln -s #{deploy_to}/shared/config/database.yml #{current_release}/config/database.yml"
 
-    run "ln -s #{deploy_to}/shared/images/users #{current_release}/public/images/users"
+#    run "ln -s #{deploy_to}/shared/images/users #{current_release}/public/images/users"
   end
 end
 
