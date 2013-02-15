@@ -5,7 +5,7 @@ require 'capistrano_colors'
 load 'deploy/assets'
 
 set :application, "SocialAwards"
-
+set :deploy_to, "/home/ubuntu/#{application}"
 set :rails_env, "production"
 set :unicorn_conf, "#{deploy_to}/current/config/unicorn.rb"
 set :keep_releases, 4
@@ -24,7 +24,7 @@ role :db,  domain, :primary => true
 #set :whenever_command, "bundle exec whenever"
 #require "whenever/capistrano"
 
-set :deploy_to, "/home/ubuntu/#{application}"
+
 set :use_sudo, false
 
 set :unicorn_pid, "#{deploy_to}/shared/pids/unicorn.pid"
@@ -129,7 +129,12 @@ def god_start
 end
 
 def god_exec(command)
-  run "#{god_command} #{command}"
+  if god_is_running
+    run "#{god_command} #{command}"
+  else
+    god_start
+    run "#{god_command} #{command}"
+  end
 end
 
 
@@ -167,6 +172,7 @@ namespace :deploy do
     god_exec "restart unicorn"
   end
   task :start do
+    puts god_config_file
     god_exec "start unicorn"
   end
   task :stop do
