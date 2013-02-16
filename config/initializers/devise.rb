@@ -216,7 +216,17 @@ Devise.setup do |config|
   # 
   # 
   require "omniauth-vkontakte"
-  config.omniauth :vkontakte, '3401502', 'WDVuXeNgXcKc4FsQKTkI', :scope => 'notify,friends,wall,groups,offline', :display => 'page'
+  
+  case Rails.env
+  when 'production'
+    app_id = '3433799'
+    app_secret = '7dfW2c6jmrE3PEiDwaQZ'
+  else
+    app_id = '3401502'
+    app_secret = 'WDVuXeNgXcKc4FsQKTkI'
+  end
+
+  config.omniauth :vkontakte, app_id, app_secret, :scope => 'notify,friends,wall,groups,offline', :display => 'page'
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
