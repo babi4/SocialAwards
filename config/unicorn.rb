@@ -1,5 +1,5 @@
 
-deploy_to  = "/home/superuser/SocialAwards"
+deploy_to  = "/home/ubuntu/SocialAwards"
 rails_root = "#{deploy_to}/current"
 pid_file   = "#{deploy_to}/shared/pids/unicorn.pid"
 socket_file= "#{deploy_to}/shared/unicorn.sock"
@@ -8,7 +8,7 @@ err_log    = "#{rails_root}/log/unicorn.stderr.log"
 old_pid    = pid_file + '.oldbin'
 
 timeout 30
-worker_processes 4 # Здесь тоже в зависимости от нагрузки, погодных условий и текущей фазы луны
+worker_processes 2 # Здесь тоже в зависимости от нагрузки, погодных условий и текущей фазы луны
 listen socket_file, :backlog => 1024
 pid pid_file
 stderr_path err_log
