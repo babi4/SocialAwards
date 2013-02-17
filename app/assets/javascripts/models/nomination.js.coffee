@@ -9,9 +9,3 @@ SocialAwards.Nomination = DS.Model.extend({
   subscribe_channel: () ->
     "/nomination/#{@.get 'id'}"
 });
-
-
-SocialAwards.Nomination.reopenClass({
-  findAll: () ->
-    console.log "CALL FIND ALL"
-});

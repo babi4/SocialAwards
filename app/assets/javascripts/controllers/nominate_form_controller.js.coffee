@@ -44,7 +44,6 @@ SocialAwards.NominateFormController = Ember.Controller.extend
   fill_variants: (total, variants) ->
     variants_arr = []
     for variant in variants
-      console.log variant
       sv = (new SocialAwards.SearchVariant).setProperties variant
       variants_arr.push sv
     @set 'variants', variants_arr
