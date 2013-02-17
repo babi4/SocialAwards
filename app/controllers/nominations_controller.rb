@@ -17,11 +17,13 @@ class NominationsController < ApplicationController
   def show
     nominees_hash = @nomination.get_nominees_hash
     nomination_hash = @nomination.serializable_hash.merge :nominees => nominees_hash.keys
+    response = {:nomination => nomination_hash, :nominees => nominees_hash.values}
     respond_to do |format|
       format.html do
+        @nomination_info = response.to_json
         @user = get_current_user_info
       end
-      format.json {render :json => {:nomination => nomination_hash, :nominees => nominees_hash.values} }
+      format.json {render :json => response }
     end
   end
 
