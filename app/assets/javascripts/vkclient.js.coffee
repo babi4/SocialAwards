@@ -1,11 +1,13 @@
 VKclient = 
-  #TODO params to object
-  get_users : (text, clb, clb_context, token) ->
-    new VKrequest 'get_users', text, clb, clb_context, token
+  get_users : (params) ->
+    new VKrequest 'get_users', params
 
 class VKrequest
-  constructor: (@type, @text, @clb, @clb_context, @token) ->
-
+  constructor: (@type, params) ->
+    @text = params.text 
+    @clb = params.clb || (() -> true)
+    @clb_context = params.clb_context || this
+    @token = params.token
     if @type is 'get_users'
       @get_users()
     else
@@ -35,11 +37,8 @@ class VKrequest
 SocialAwards.VKclient = VKclient
 
 # var script = document.createElement('SCRIPT'); 
-
 # script.src = "https://api.vk.com/method/getProfiles?uid=66748&access_token=533bacf...&callback=callbackFunc"; 
-
 # document.getElementsByTagName("head")[0].appendChild(script); 
-
 # function callbackFunc(result) { 
 #   alert(result); 
 #} 

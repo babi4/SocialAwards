@@ -39,7 +39,11 @@ SocialAwards.NominateFormController = Ember.Controller.extend
     user = @controllerFor('auth').get 'current_user'
     return false unless user
     token = user.token
-    SocialAwards.VKclient.get_users text, @fill_variants, this, token
+    SocialAwards.VKclient.get_users 
+      text: text
+      clb:  @fill_variants
+      clb_context: this
+      token: token
 
   fill_variants: (total, variants) ->
     variants_arr = []

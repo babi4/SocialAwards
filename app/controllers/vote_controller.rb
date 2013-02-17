@@ -45,9 +45,11 @@ class VoteController < ApplicationController
   end
 
   def get_score
-    #TODO check vote score
     @vote_score = params[:vote_score] 
-    renderErr "vote_score required " unless @vote_score 
+    renderErr "vote_score required " unless @vote_score
+    if @vote_score != "1" and @vote_score != "-1"
+      renderErr "invalide vote_score" if @vote_score != "-1"
+    end
   end
 
 

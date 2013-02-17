@@ -9,7 +9,6 @@ class Nominees
   def get(page=0)
     get_ids page
     return {} if page < 0
-    puts @nominees_ids_to_scores
     fetch_nominees @nominees_ids_to_scores.keys
     merge_nominees_and_scores
     return_hash

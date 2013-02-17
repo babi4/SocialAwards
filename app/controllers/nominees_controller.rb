@@ -10,7 +10,7 @@ class NomineesController < ApplicationController
 
 
   def create
-    nominee_model = get_nominee_model
+    nominee_model = @nomination.nominee_model
     nominee = nominee_model.where(:uid => @uid).try :first
     unless nominee
         nominee = nominee_model.create_by_uid @uid
@@ -37,21 +37,12 @@ class NomineesController < ApplicationController
       screen_name = params[:id]
       type = $redis.hget 'nominee_to_type', screen_name
       puts type
-      if type == 'user'
-        nominee_class = User
+      if type == 'person'
+        nominee_class = Person
         @nominee = nominee_class.find_by_screen_name screen_name
       else
         render_400 "Cant find such nominee"
       end
-    end
-  end
-
-  def get_nominee_model
-    case @nomination.nominees_type
-    when 'user' #TODO rename to person
-      Person
-    when 'public'
-      Public
     end
   end
 

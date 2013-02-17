@@ -21,7 +21,7 @@ class Nomination < ActiveRecord::Base
 #  
 #  
   def nominee_model
-    if self.nominees_type == 'user'
+    if self.nominees_type == 'person'
       Person
     else
       throw "nominees_type #{nomination.nominees_type} not implemented"
@@ -61,7 +61,6 @@ class Nomination < ActiveRecord::Base
     Nomination.where nominations_table[:id].in ids
   end
 
-  #TODO to nominee object
   def add_score(nominee, vote_score)
     return false unless nominee
     if $redis.sismember nominee.nominations_set_name, self.id
