@@ -15,9 +15,37 @@ class NominationsController < ApplicationController
   end
 
   def show
-    nominees_hash = @nomination.get_nominees_hash
-    nomination_hash = @nomination.serializable_hash.merge :nominees => nominees_hash.keys
-    response = {:nomination => nomination_hash, :nominees => nominees_hash.values}
+    nominees_and_scores_hash = @nomination.get_nominees_hash
+    nomination_hash = @nomination.serializable_hash.merge :nominees_scores => []
+
+ #   nominees_h = {}
+ #   nominees_and_scores_hash[:nominees].each do |nominee|
+ #     nominees_h[nominee.id] = nominee.serializable_hash.merge(:nominees_scores => [])
+  #  end
+  # 
+    seed = rand 100000
+    i = 0
+    nominees_scores = []
+    nominees_and_scores_hash[:scores].each do |score_a|
+      s_id = seed + i
+      score_h = {
+        :id         => s_id,
+        :nominee_id => score_a.first.to_i,
+        :score      => score_a.last.to_i
+      }
+      nominees_scores << score_h
+      nomination_hash[:nominees_scores] << s_id
+      i+=1
+    end
+
+
+    response = {:nomination => nomination_hash, :nominees_scores => nominees_scores }
+    if @nomination.nominee_model == Person 
+      response['peoples'] = nominees_and_scores_hash[:nominees]
+    else
+      throw "EXECPTION"
+    end  
+
     respond_to do |format|
       format.html do
         @nomination_info = response.to_json
