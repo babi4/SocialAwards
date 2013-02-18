@@ -27,7 +27,7 @@ SocialAwards.NominateFormController = Ember.Controller.extend
 
   add_nominee: (nominee, nomination) ->
     SocialAwards.Nominee.createRecord
-      id         : nominee.id + ""
+      id         : nominee.id + "" # TODO why not integer?
       first_name : nominee.first_name
       last_name  : nominee.last_name
       score      : 0

@@ -24,7 +24,7 @@ class Nomination < ActiveRecord::Base
     if self.nominees_type == 'person'
       Person
     else
-      throw "nominees_type #{nomination.nominees_type} not implemented"
+      throw "nominees_type '#{self.nominees_type}' not implemented"
     end
   end
 
