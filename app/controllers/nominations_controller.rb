@@ -27,10 +27,11 @@ class NominationsController < ApplicationController
     i = 0
     nominees_scores = []
     nominees_and_scores_hash[:scores].each do |score_a|
+      nominee_key = (@nomination.nominees_type + "_id").to_sym
       s_id = seed + i
       score_h = {
         :id         => s_id,
-        :nominee_id => score_a.first.to_i,
+        nominee_key => score_a.first.to_i,
         :score      => score_a.last.to_i
       }
       nominees_scores << score_h

@@ -17,7 +17,7 @@ SocialAwards.NominateFormController = Ember.Controller.extend
           uid : uid
       .success (resp) => 
         if resp.error is false
-          @add_nominee resp.data.nominee, nomination
+          @add_nominee resp.data, nomination
         else
           alert resp.error
       #create record
@@ -25,13 +25,8 @@ SocialAwards.NominateFormController = Ember.Controller.extend
     else
       alert "Залогинься, мудило"
 
-  add_nominee: (nominee, nomination) ->
-    SocialAwards.Nominee.createRecord
-      id         : nominee.id + ""
-      first_name : nominee.first_name
-      last_name  : nominee.last_name
-      score      : 0
-      nomination : nomination #USE FIND AND ID
+  add_nominee: (nominee_data, nomination) ->
+    nomination.add_nominee nominee_data
 
   fetch_variants: () ->
     text = @get 'nominate_value'
