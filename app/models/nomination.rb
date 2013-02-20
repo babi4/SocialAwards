@@ -35,11 +35,12 @@ class Nomination < ActiveRecord::Base
 
 
   def nominate(nominee)
-    res = $redis.pipelined do
+    result = $redis.pipelined do
       $redis.sadd nominee.nominations_set_name, self.id #TODO maybe use id
       $redis.zadd sset_name, 0, nominee.id
     end
-    res.last
+    result.last#TODO use last!!
+    0
   end
 
   def self.find_nominatios_with_nominee_json(screen_name, id)

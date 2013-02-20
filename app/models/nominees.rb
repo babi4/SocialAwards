@@ -9,9 +9,11 @@ class Nominees
   def get(page=0)
     get_ids page
     return {} if page < 0
-    fetch_nominees @nominees_ids_to_scores.keys
-    merge_nominees_and_scores
-    return_hash
+    fetch_nominees @nominees_ids
+#    prepare_data
+    return_data
+#    merge_nominees_and_scores
+#    return_hash
   end
 
   def get_ids(page=0)
@@ -21,18 +23,23 @@ class Nominees
       return
     end
     offset = page * nominees_per_page
-    nominees_a = $redis.zrevrangebyscore @nomination.sset_name, '+inf', 0, {
+    @nominees_a_of_a = $redis.zrevrangebyscore @nomination.sset_name, '+inf', 0, {
         :limit => [offset, nominees_per_page],
         :withscores => true
     }
-    nominees = {}
 
-    nominees_a.each do |nominee|
-      nominee_id = nominee.first.to_i
-      score     = nominee.last.to_i
-      nominees[nominee_id] = score
+    @nominees_ids = []
+    @nominees_a_of_a.each do |nominee|
+      @nominees_ids << nominee.first.to_i
     end
-    @nominees_ids_to_scores = nominees
+
+
+   # nominees_a.each do |nominee|
+   #   nominee_id = nominee.first.to_i
+   #  score     = nominee.last.to_i
+   #  nominees[nominee_id] = score
+    #end
+    #@nominees_ids_to_scores = nominees
   end
 
   def fetch_nominees(ids=[])
@@ -54,9 +61,16 @@ class Nominees
     hsh
   end
 
+  def prepare_data
+  end
+
+  def return_data
+    {:nominees => @nominees, :scores => @nominees_a_of_a}
+  end
+
 
   def nominees_per_page
-    10
+    10000
   end
 
 

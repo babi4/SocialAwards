@@ -25,8 +25,10 @@ SocialAwards.ApplicationRoute = Ember.Route.extend
 
 SocialAwards.NominationRoute = Ember.Route.extend
   model : (params) ->
-    if window.nomination_info?.nomination?.id is (params.nomination_id - 0)
-      @store.loadMany SocialAwards.Nominee, window.nomination_info.nominees
+    if window.nomination_info?.nomination?.id is (params.nomination_id - 0)      
+#      debugger
+      @store.loadMany SocialAwards.Person, window.nomination_info.peoples
+      @store.loadMany SocialAwards.NomineeScore, window.nomination_info.nominees_scores
       @store.load SocialAwards.Nomination, window.nomination_info.nomination
     SocialAwards.Nomination.find params.nomination_id
 

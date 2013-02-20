@@ -1,0 +1,7 @@
+{{#each nominee_and_score in controller}}
+  <li>
+  {{ nominee_and_score.nominee.name }} - {{ nominee_and_score.score }}  <button {{action "vote" nominee_and_score}}>Vote</button>
+  </li>
+{{else}}
+  NOBODY NOMINEES
+{{/each}}
