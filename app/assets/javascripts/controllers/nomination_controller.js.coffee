@@ -6,4 +6,4 @@ SocialAwards.NominationController = Ember.ObjectController.extend
   find_nominee_by_id: (nominee_id) ->
     @content.get('nominees_scores').find (nominee_score) ->  
       nominee = nominee_score.get 'nominee'
-      nominee.get('id') is (nominee_id + "")
+      ((nominee.get 'id') + "") is (nominee_id + "") #REALY TO STRING?

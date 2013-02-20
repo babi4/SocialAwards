@@ -23,7 +23,7 @@ class NomineesController < ApplicationController
         score = @nomination.nominate nominee
         renderOK :status => 'nominated', 
                  :nominee => nominee.serializable_hash, 
-                 :nominee_score => {:nominee_id => nominee.id, :score => score}
+                 :nominee_score => {:nominee_id => nominee.id, :score => score, :nomination_id => @nomination.id }
       end
     else
       renderErr "Can't find/create nominee"

@@ -26,7 +26,12 @@ SocialAwards.NominateFormController = Ember.Controller.extend
       alert "Залогинься, мудило"
 
   add_nominee: (nominee_data, nomination) ->
-    nomination.add_nominee nominee_data
+    if nominee_data.status is 'already_nominated'
+      #TODO show nominee page
+    else if nominee_data.status is 'nominated'
+      nomination.add_nominee nominee_data
+    else
+      alert 'Error happened!'
 
   fetch_variants: () ->
     text = @get 'nominate_value'

@@ -70,7 +70,7 @@ class Nominees
 
 
   def nominees_per_page
-    10
+    10000
   end
 
 
