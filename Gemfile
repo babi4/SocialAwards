@@ -20,6 +20,8 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem "active_model_serializers"
+
 gem 'jquery-rails'
 
 gem 'omniauth'

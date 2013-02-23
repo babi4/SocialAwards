@@ -199,6 +199,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_model_serializers
   capistrano
   capistrano_colors
   coffee-rails (~> 3.2.1)
