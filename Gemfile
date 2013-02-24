@@ -26,6 +26,8 @@ group :daemons do
 end
 
 
+gem 'zmq'
+
 
 gem "active_model_serializers"
 

@@ -8,7 +8,7 @@ class DealsController < ApplicationController
   end
 
   def check
-    
+    $daemon_connector
     renderOK
   end
 
