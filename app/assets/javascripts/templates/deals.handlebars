@@ -1,5 +1,36 @@
-<h1>Deals</h1>
+<button {{action "toggle_view" nominee_and_score}}>
+  {{#if hidden }}
+    Show
+  {{else}}
+    Hide
+  {{/if}}
+ </button>
 
-<p>Your content here.</p>
 
-{{outlet}}
+{{ controller }}
+
+{{#if hidden }}
+  Deals
+{{else}}
+  <br>
+  <ul>
+  {{#each deal in controller}}
+    <li>
+      <a target='_blank' {{bindAttr href="deal.url"}} >  {{deal.body}} </a>
+      {{#if deal.isChecked}}
+        Spinner
+      {{else}}
+        <button {{action "check_deal" deal}}>Ready!</button>
+      {{/if}}
+
+    </li>
+  {{else}}
+    {{#if deals_loaded}}
+      No deals ((
+    {{else}}
+      Loading deals (spinner wow-wow)
+    {{/if}}
+  {{/each}}
+  </ul>
+
+{{/if}}

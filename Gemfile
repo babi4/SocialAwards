@@ -20,6 +20,13 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+
+group :daemons do
+  gem 'em-synchrony'  
+end
+
+
+
 gem "active_model_serializers"
 
 gem 'jquery-rails'

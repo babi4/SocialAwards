@@ -1,5 +1,4 @@
 SocialPremia::Application.routes.draw do
-  resources :deals
 
 
   devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
@@ -19,6 +18,11 @@ SocialPremia::Application.routes.draw do
   resources :nominations, :only => [:index, :show] #index from main
   resources :nominees, :only    => [:show, :create] #index from main
   resources :vote, :only       => [:create]
+  resources :deals do
+    member do
+      post 'check'
+    end
+  end
 
   # Sample resource route with options:
   #   resources :products do

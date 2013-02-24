@@ -3,6 +3,8 @@ class Person < ActiveRecord::Base
 
   has_many :votes, :as => :nominee
 
+  has_one :deals, :as => :target
+
   # 
   def self.create_by_uid(uid)
     p_data = fetch_data_from_snetwork(uid)

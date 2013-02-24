@@ -1,3 +1,3 @@
-SocialPremia.DealRoute = Ember.Route.extend({
+SocialAwards.DealRoute = Ember.Route.extend({
 
 });

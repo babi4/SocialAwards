@@ -1,3 +1,5 @@
 class DealSerializer < ActiveModel::Serializer
-  attributes :id, :title, :body, :type
+
+  attributes :id, :title, :body, :url
+  
 end

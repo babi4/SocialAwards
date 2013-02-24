@@ -1,2 +1,2 @@
-SocialPremia.DealView = Ember.View.extend({
+SocialAwards.DealView = Ember.View.extend({
 });

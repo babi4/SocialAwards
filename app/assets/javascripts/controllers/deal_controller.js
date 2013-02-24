@@ -1,3 +1,3 @@
-SocialPremia.DealController = Ember.ObjectController.extend({
+SocialAwards.DealController = Ember.ObjectController.extend({
 
 });
