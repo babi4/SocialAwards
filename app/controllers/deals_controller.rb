@@ -8,7 +8,7 @@ class DealsController < ApplicationController
   end
 
   def check
-    $daemon_connector
+    DaemonConnector.send_to_deal_check :target => @deal.target, :user => {:id => current_user.id, :token => current_user.token}
     renderOK
   end
 

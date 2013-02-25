@@ -1,4 +1,3 @@
-
 task :add_test_deal => :environment do
   puts "Get random person target"
   target = Person.order("RANDOM()").try :first

@@ -22,7 +22,8 @@ end
 
 
 group :daemons do
-  gem 'em-synchrony'  
+  gem 'em-synchrony'
+  gem 'em-zeromq'
 end
 
 

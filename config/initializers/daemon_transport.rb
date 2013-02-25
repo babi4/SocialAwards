@@ -6,7 +6,7 @@ class DaemonTransport
   end
   def send(addr, data)
     outbound = @context.socket ZMQ::DOWNSTREAM
-    outbound.connect "IPC://tmp/"
+    outbound.connect "ipc:///tmp/#{addr}"
     result = outbound.send data
     outbound.close
     result
