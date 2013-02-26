@@ -24,6 +24,7 @@ end
 group :daemons do
   gem 'em-synchrony'
   gem 'em-zeromq'
+  gem 'yajl-ruby', :require => "yajl"
 end
 
 
