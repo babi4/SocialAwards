@@ -3,3 +3,4 @@ SocialAwards.Deal = DS.Model.extend
   body: DS.attr 'string'
   url : DS.attr 'string'
   isChecked : false
+  #TODO add statuses?
