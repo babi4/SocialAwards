@@ -17,6 +17,14 @@ class DealsController < ApplicationController
   end
 
   def report
+    #TODO check daemon token
+    if params[:status] == true
+      #save to db 
+    else
+      #notify false
+      message = FayeMessage.new :user_notify, :user_id => params[:user_id], :action => :deal_check, :status => :failed, :deal_id => @deal.id
+      message.send
+    end
     renderOK
   end
 

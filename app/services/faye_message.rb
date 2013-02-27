@@ -10,6 +10,8 @@ class FayeMessage
     case @message_type
     when :new_vote
       @message = {:channel => "/nomination/#{@data[:nomination_id]}", :data => @data}
+    when :user_notify
+      @message = {:channel => "/user/#{@data[:user_id]}", :data => @data}
     else
       raise "Message type #{@message_type} not implemented"
     end
