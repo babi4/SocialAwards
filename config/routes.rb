@@ -21,6 +21,7 @@ SocialPremia::Application.routes.draw do
   resources :deals do
     member do
       post 'check'
+      post 'report'
     end
   end
 

@@ -1,6 +1,14 @@
 require "net/http"
 require "yajl"
 
+
+
+class VKrequester
+  def initialize(token) #TODO or not to use it?
+    @token = token
+  end
+end
+
 class Vkclient
   def self.fetch_profile(uid)
     perform_request 'users.get', "uid=#{uid}&fields=uid,first_name,last_name,screen_name,sex,bdate"

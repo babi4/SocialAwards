@@ -1,6 +1,6 @@
 class DealsController < ApplicationController
 
-  before_filter :find_deal, :only => :check
+  before_filter :find_deal, :only => [:check, :report]
 
   def index
     deals = Deal.all
@@ -8,11 +8,15 @@ class DealsController < ApplicationController
   end
 
   def check
-
     DaemonConnector.send_to_deal_check({
       :target => {:uid => @deal.target.uid, :type => @deal.target_type }, 
-      :user => {:id => current_user.id, :uid => current_user.uid, :token => current_user.token}, 
+      :user => {:id => current_user.id, :uid => current_user.uid, :token => current_user.token},
+      :deal_id => @deal.id,
       :action_type => @deal.action_type })
+    renderOK
+  end
+
+  def report
     renderOK
   end
 
