@@ -21,10 +21,10 @@ SocialAwards.UserController = Ember.ObjectController.extend
     deal = deals.toArray()[0]
     deal.set 'status', false if deal
     if message.status is ''
-      deal.set 'status', 'done'
+      deal.setDone()
     else
       #TODO mb alert? 
-      deal.set 'status', 'failed'
+      deal.setFailed()
       # ...
     
     

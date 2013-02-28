@@ -4,6 +4,7 @@ SocialAwards.Deal = DS.Model.extend
   url : DS.attr 'string'
   status : 'new'
 
+
   isNew : Ember.computed ->
     (@get 'status') is 'new'
   .property 'status'
@@ -19,3 +20,13 @@ SocialAwards.Deal = DS.Model.extend
   isFailed : Ember.computed ->
     (@get 'status') is 'failed'
   .property 'status'
+
+
+  setChecking: ->
+    @set 'status', 'checking'
+
+  setDone: ->
+    @set 'status', 'done'
+
+  setFailed: ->
+    @set 'status', 'failed'
