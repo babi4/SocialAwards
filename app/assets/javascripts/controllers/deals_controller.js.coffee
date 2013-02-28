@@ -1,4 +1,4 @@
-SocialAwards.DealsController = Ember.ArrayController.extend({
+SocialAwards.DealsController = Ember.ArrayController.extend
   hidden : true
   deals_loaded : false
   content: []
@@ -32,6 +32,3 @@ SocialAwards.DealsController = Ember.ArrayController.extend({
     jQuery.ajax
       type : 'POST',
       url : "/deals/#{deal.get 'id'}/check"
-
-
-});
