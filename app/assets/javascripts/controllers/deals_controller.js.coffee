@@ -27,7 +27,7 @@ SocialAwards.DealsController = Ember.ArrayController.extend({
 
 
   check_deal: (deal) -> 
-    deal.set "isChecked", true
+    deal.set "status", 'checking'
     console.log "/deals/#{deal.get 'id'}/check"
     jQuery.ajax
       type : 'POST',

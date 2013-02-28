@@ -17,10 +17,18 @@
   {{#each deal in controller}}
     <li>
       <a target='_blank' {{bindAttr href="deal.url"}} >  {{deal.body}} </a>
-      {{#if deal.isChecked}}
+      {{#if deal.isChecking}}
         Spinner
       {{else}}
-        <button {{action "check_deal" deal}}>Ready!</button>
+        {{#if deal.isNew}}
+          <button {{action "check_deal" deal}}>Ready!</button>
+        {{else}}
+          {{#if deal.isFailed}}
+            <button {{action "check_deal" deal}}>Check another time</button>
+          {{else}}
+            "Done and GTFO"
+          {{/if}}
+        {{/if}}
       {{/if}}
 
     </li>

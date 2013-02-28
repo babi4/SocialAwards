@@ -16,8 +16,15 @@ SocialAwards.UserController = Ember.ObjectController.extend
         console.log "Unknown message action #{message.action}"
 
   deal_check_action: (message) ->
-    deal = SocialAwards.Deal.find message.deal_id
-    deal.set 'isChecked', false
-
+    console.log message
+    deals = SocialAwards.Deal.filter (deal) -> (deal.get 'id') is ( message.deal_id + "") #TODO not string
+    deal = deals.toArray()[0]
+    deal.set 'status', false if deal
+    if message.status is ''
+      deal.set 'status', 'done'
+    else
+      #TODO mb alert? 
+      deal.set 'status', 'failed'
       # ...
+    
     
