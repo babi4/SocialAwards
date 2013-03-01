@@ -1,6 +1,7 @@
 class DealsController < ApplicationController
 
   before_filter :find_deal, :only => [:check, :report]
+  before_filter :find_user, :only => [:report]
 
   def index
     deals = Deal.all
@@ -19,7 +20,9 @@ class DealsController < ApplicationController
   def report
     #TODO check daemon token
     if params[:status] == true
-      #save to db 
+      s_deal_id = SuccessUserDeal.create :user => @user, :deal => @deal
+      message = FayeMessage.new :user_notify, :user_id => params[:user_id], :action => :deal_check, :status => :success, :deal_id => @deal.id, :s_deal_id => s_deal_id.id
+      message.send
     else
       #notify false
       message = FayeMessage.new :user_notify, :user_id => params[:user_id], :action => :deal_check, :status => :failed, :deal_id => @deal.id
@@ -29,6 +32,10 @@ class DealsController < ApplicationController
   end
 
   private
+
+  def find_user
+    @user = User.find params[:user_id]
+  end
 
   def find_deal
     @deal = Deal.find params[:id]
