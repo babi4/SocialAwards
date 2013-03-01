@@ -4,7 +4,7 @@ task :add_test_deal => :environment do
   if target
     puts "Target is #{target.first_name} #{target.last_name}"
     url = "http://vkontakte.ru/#{target.screen_name}"
-    deal = Deal.new title: "Ne bud' mudakom", body: "Ne bud' mudakom - follow Petya!", action_type: :follow, :url => url
+    deal = Deal.new title: "Ne bud' mudakom", body: "Ne bud' mudakom - follow #{target.screen_name}!", action_type: :follow, :url => url
     deal.target = target
     deal.save!
     puts "Success"

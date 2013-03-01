@@ -20,7 +20,7 @@ SocialAwards.UserController = Ember.ObjectController.extend
     deals = SocialAwards.Deal.filter (deal) -> (deal.get 'id') is ( message.deal_id + "") #TODO not string
     deal = deals.toArray()[0]
     deal.set 'status', false if deal
-    if message.status is ''
+    if message.status is 'success'
       deal.setDone()
     else
       #TODO mb alert? 

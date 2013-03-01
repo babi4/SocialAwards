@@ -109,7 +109,7 @@ class FollowerCheck
         return true
       end
       friends = Vkclient.check_user_friendship @target[:uid], @user[:token]
-      return false if subs == false
+      return false if friends == false
       if friends.first[:friend_status] == 1
         return true
       end

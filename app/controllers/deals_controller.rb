@@ -4,7 +4,10 @@ class DealsController < ApplicationController
   before_filter :find_user, :only => [:report]
 
   def index
-    deals = Deal.all
+    #TODO maybe use some arel magick?
+    suc_user_deals_ids = current_user.success_user_deals.to_a.map(&:deal_id)
+    deals_table = Deal.arel_table
+    deals = Deal.where deals_table[:id].not_in suc_user_deals_ids
     render :json => deals
   end
 
@@ -19,7 +22,7 @@ class DealsController < ApplicationController
 
   def report
     #TODO check daemon token
-    if params[:status] == true
+    if params[:status] == "true"
       s_deal_id = SuccessUserDeal.create :user => @user, :deal => @deal
       message = FayeMessage.new :user_notify, :user_id => params[:user_id], :action => :deal_check, :status => :success, :deal_id => @deal.id, :s_deal_id => s_deal_id.id
       message.send
