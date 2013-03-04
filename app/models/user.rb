@@ -6,9 +6,10 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessible :uid, :provider, :email, :password, :password_confirmation, :remember_me, :first_name, :second_name, :nickname, :screen_name, :sex, :bdate, :expires, :expires_at, :token
-  # attr_accessible :title, :body
-  # 
-  # 
+
+
+  has_many :success_user_deals
+  has_many :deals, :through => :success_user_deals
   
 
   def self.fetch_by_ids(ids=[])

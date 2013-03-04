@@ -1,0 +1,1 @@
+SocialAwards.DealsView = Ember.View.extend()

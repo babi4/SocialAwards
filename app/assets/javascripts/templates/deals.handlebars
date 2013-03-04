@@ -1,0 +1,44 @@
+<button {{action "toggle_view" nominee_and_score}}>
+  {{#if hidden }}
+    Show
+  {{else}}
+    Hide
+  {{/if}}
+ </button>
+
+
+{{ controller }}
+
+{{#if hidden }}
+  Deals
+{{else}}
+  <br>
+  <ul>
+  {{#each deal in controller}}
+    <li>
+      <a target='_blank' {{bindAttr href="deal.url"}} >  {{deal.body}} </a>
+      {{#if deal.isChecking}}
+        Spinner
+      {{else}}
+        {{#if deal.isNew}}
+          <button {{action "check_deal" deal}}>Ready!</button>
+        {{else}}
+          {{#if deal.isFailed}}
+            <button {{action "check_deal" deal}}>Check another time</button>
+          {{else}}
+            "Done and GTFO"
+          {{/if}}
+        {{/if}}
+      {{/if}}
+
+    </li>
+  {{else}}
+    {{#if deals_loaded}}
+      No deals ((
+    {{else}}
+      Loading deals (spinner wow-wow)
+    {{/if}}
+  {{/each}}
+  </ul>
+
+{{/if}}

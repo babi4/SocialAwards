@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130207175552) do
+ActiveRecord::Schema.define(:version => 20130301181147) do
 
   create_table "awards", :force => true do |t|
     t.string   "name",                   :null => false
@@ -22,6 +22,17 @@ ActiveRecord::Schema.define(:version => 20130207175552) do
     t.text     "comment"
     t.datetime "created_at",             :null => false
     t.datetime "updated_at",             :null => false
+  end
+
+  create_table "deals", :force => true do |t|
+    t.string   "title",       :null => false
+    t.text     "body",        :null => false
+    t.string   "action_type", :null => false
+    t.string   "url",         :null => false
+    t.integer  "target_id",   :null => false
+    t.string   "target_type", :null => false
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
   end
 
   create_table "nominations", :force => true do |t|
@@ -43,6 +54,13 @@ ActiveRecord::Schema.define(:version => 20130207175552) do
     t.string   "bdate",       :default => "", :null => false
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
+  end
+
+  create_table "success_user_deals", :force => true do |t|
+    t.integer  "user_id",    :null => false
+    t.integer  "deal_id",    :null => false
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|

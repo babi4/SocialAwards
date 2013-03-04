@@ -14,8 +14,4 @@
 /log/*.log
 /tmp
 
-/.idea
-/.DS_Store
-
 #Ignore redis dumps
-dump.rdb

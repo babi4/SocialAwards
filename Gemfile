@@ -20,6 +20,20 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+
+group :daemons do
+  gem 'em-synchrony'
+  gem 'em-zeromq'
+  gem 'em-http-request'
+  gem 'yajl-ruby', :require => "yajl"
+end
+
+
+gem 'zmq'
+
+
+gem "active_model_serializers"
+
 gem 'jquery-rails'
 
 gem 'omniauth'

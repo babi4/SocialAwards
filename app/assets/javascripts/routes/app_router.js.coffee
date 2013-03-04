@@ -19,7 +19,13 @@ SocialAwards.NominationsRoute = Ember.Route.extend
 
 SocialAwards.ApplicationRoute = Ember.Route.extend
   setupController: () ->
-    @controllerFor('auth').set 'current_user', window.current_user
+    @controllerFor('auth').set 'current_user', window.current_user #TODO or use only user controller
+    @controllerFor('deals').set 'content', SocialAwards.Deal.all()
+    if window.current_user
+      @controllerFor('user').set 'content', window.current_user
+      @controllerFor('user').faye_subscribe()
+      # ...
+    
 
 
 
@@ -36,3 +42,5 @@ SocialAwards.NominationRoute = Ember.Route.extend
 #    controller.set 'content', SocialAwards.Nomination.
     callback = controller.faye_callback.bind controller
     SocialAwards.FayeClient.subscribe model.subscribe_channel(), callback
+    
+

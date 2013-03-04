@@ -3,12 +3,14 @@ class Person < ActiveRecord::Base
 
   has_many :votes, :as => :nominee
 
+  has_one :deals, :as => :target
+
   # 
   def self.create_by_uid(uid)
-    p_data = fetch_data_from_snetwork(uid)
-    puts p_data.inspect
+    p_data = fetch_data_from_snetwork(uid).first
+    p_data[:screen_name] = "id#{p_data[:uid]}" unless p_data[:screen_name]
     if p_data
-      self.create p_data.first.except(:nickname)
+      self.create p_data.except(:nickname)
     else
       false
     end
