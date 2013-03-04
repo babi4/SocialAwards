@@ -7,10 +7,10 @@ class Person < ActiveRecord::Base
 
   # 
   def self.create_by_uid(uid)
-    p_data = fetch_data_from_snetwork(uid)
-    puts p_data.inspect
+    p_data = fetch_data_from_snetwork(uid).first
+    p_data[:screen_name] = "id#{p_data[:uid]}" unless p_data[:screen_name]
     if p_data
-      self.create p_data.first.except(:nickname)
+      self.create p_data.except(:nickname)
     else
       false
     end

@@ -6,8 +6,16 @@ class DealsController < ApplicationController
   def index
     #TODO maybe use some arel magick?
     suc_user_deals_ids = current_user.success_user_deals.to_a.map(&:deal_id)
+
+    puts suc_user_deals_ids.inspect
+
     deals_table = Deal.arel_table
-    deals = Deal.where deals_table[:id].not_in suc_user_deals_ids
+
+    if suc_user_deals_ids.empty?
+      deals = Deal.all
+    else
+      deals = Deal.where deals_table[:id].not_in suc_user_deals_ids
+    end
     render :json => deals
   end
 

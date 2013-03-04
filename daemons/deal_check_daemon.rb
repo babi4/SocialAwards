@@ -95,7 +95,7 @@ class FollowerCheck
     else
       puts "Not implemented"
       false
-   end
+    end
 
   end
 
