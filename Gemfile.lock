@@ -225,6 +225,7 @@ PLATFORMS
 
 DEPENDENCIES
   active_model_serializers
+  activesupport
   capistrano
   capistrano_colors
   coffee-rails (~> 3.2.1)
