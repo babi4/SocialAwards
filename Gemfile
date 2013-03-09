@@ -28,7 +28,7 @@ group :daemons do
   gem 'em-zeromq'
   gem 'em-http-request'
   gem 'yajl-ruby', :require => "yajl"
-
+  gem 'activesupport'
   gem 'pg'
   gem 'em-postgresql-adapter', :git => 'git://github.com/leftbee/em-postgresql-adapter.git'
   gem 'rack-fiber_pool',  :require => 'rack/fiber_pool'

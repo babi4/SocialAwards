@@ -1,4 +1,5 @@
 require "bundler"
+require "logger"
 require_relative "../app/models/vkclient.rb"#TODO to services
 
 Bundler.require :daemons
@@ -43,6 +44,7 @@ module DaemonMixin
 #        ActiveRecord::Base.establish_connection params
 #    end
     @connections = ActiveRecord::Base.establish_connection params
+    ActiveRecord::Base.logger = Logger.new(STDOUT) #TODO set level
     @connections.connection.execute("SELECT 1") #FOR TEST
   end
   
@@ -106,7 +108,7 @@ class DealCheckDaemon
   end
 
   def start_succ_deal_fetcher
-    
+    @suc_deal_fetcher = SuccDealFetcher.new
   end
 
   def start_succ_deal_processor
@@ -179,6 +181,29 @@ class FollowerCheck
   end
 
 
+end
+
+class SuccDealFetcher
+  def initialize
+    @suc_deals_period = 1.minute
+    @timer_delay = 1.minute
+    @deals = []
+    @timer = false
+    fetch
+  end
+
+  def fetch
+    return false if @timer
+    @deals = SuccessUserDeal.select(:id).where("updated_at < ?", @timer_delay.ago).map(&:id)
+    puts @deals.inspect
+    if @deals.empty?
+      @timer = EM::Synchrony.add_timer @timer_delay do
+        @timer = false
+        fetch
+      end
+    end
+  end  
+  
 end
 
 EM.synchrony do
