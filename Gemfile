@@ -22,10 +22,18 @@ end
 
 
 group :daemons do
-  gem 'em-synchrony'
+  gem 'em-synchrony', :git     => 'git://github.com/igrigorik/em-synchrony.git',
+                    :require => ['em-synchrony',
+                                 'em-synchrony/activerecord']
   gem 'em-zeromq'
   gem 'em-http-request'
   gem 'yajl-ruby', :require => "yajl"
+
+  gem 'pg'
+  gem 'em-postgresql-adapter', :git => 'git://github.com/leftbee/em-postgresql-adapter.git'
+  gem 'rack-fiber_pool',  :require => 'rack/fiber_pool'
+
+  
 end
 
 
