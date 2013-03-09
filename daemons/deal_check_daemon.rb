@@ -37,7 +37,45 @@ module DaemonMixin
     puts "[#{Time.now.to_f.to_s.ljust(18)} || #{Time.now.to_s}] #{args.join(' ')}"
   end
 
+
+  def establish_connection(params)
+#    @connections = EventMachine::Synchrony::ConnectionPool.new(size: 5) do
+#        ActiveRecord::Base.establish_connection params
+#    end
+    @connections = ActiveRecord::Base.establish_connection params
+    @connections.connection.execute("SELECT 1") #FOR TEST
+  end
+  
+  #TODO UNUSED
+  def take_db_params(env)
+    file_path = File.dirname(__FILE__) + '/config/database.yml'
+    YAML::load(File.open(file_path))[env]
+  end
 end
+
+
+class Deal < ActiveRecord::Base
+  attr_accessible :body, :title, :action_type, :url
+#  belongs_to :target, :polymorphic => true
+end
+
+class SuccessUserDeal < ActiveRecord::Base
+  attr_accessible :user, :deal
+  belongs_to :user
+  belongs_to :deal
+end
+
+class User < ActiveRecord::Base
+  # Include default devise modules. Others available are:
+  # :token_authenticatable, :confirmable,
+  # :lockable, :timeoutable and :omniauthable
+  # Setup accessible (or protected) attributes for your model
+  attr_accessible :uid, :provider, :email, :password, :password_confirmation, :remember_me, :first_name, :second_name, :nickname, :screen_name, :sex, :bdate, :expires, :expires_at, :token
+
+  has_many :success_user_deals
+  has_many :deals, :through => :success_user_deals
+end
+
 
 
 class DealCheckDaemon
@@ -59,9 +97,33 @@ class DealCheckDaemon
       part.close
     end
 
+    connect_to_db
+    start_succ_deal_fetcher
+    start_succ_deal_processor
+
     log "Started"
 
   end
+
+  def start_succ_deal_fetcher
+    
+  end
+
+  def start_succ_deal_processor
+    
+  end
+
+
+  def connect_to_db
+    env = ENV['RAILS_ENV'] || 'development'
+    params = take_db_params env
+    raise "DBerror" if params.nil?
+    establish_connection params
+  end
+
+
+
+
 
   def recieve_message message
     messages_hash = Yajl::Parser.parse message, :symbolize_keys => true
