@@ -1,6 +1,4 @@
 SocialPremia::Application.routes.draw do
-
-
   devise_for :users, :controllers => { :omniauth_callbacks => "omniauth_callbacks" }
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -24,6 +22,8 @@ SocialPremia::Application.routes.draw do
       post 'report'
     end
   end
+  resources :success_user_deals, :only => [:create, :destroy]
+
 
   # Sample resource route with options:
   #   resources :products do

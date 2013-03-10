@@ -1,7 +1,7 @@
 class DealsController < ApplicationController
 
   before_filter :find_deal, :only => [:check, :report]
-  before_filter :find_user, :only => [:report]
+  before_filter :find_user, :only => [:report, :cancel]
 
   def index
     #TODO maybe use some arel magick?
@@ -41,7 +41,7 @@ class DealsController < ApplicationController
     end
     renderOK
   end
-
+  
   private
 
   def find_user

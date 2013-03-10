@@ -33,10 +33,10 @@ module DaemonMixin
   end
 
 
-  def notify_rails(url_postfix, params)
+  def notify_rails(url_postfix, method, params={})
     url = "http://#{@@rails_url}/#{url_postfix}/"
     params.merge! :daemon_token => @@daemon_token
-    EventMachine::HttpRequest.new(url).post :body => params
+    EventMachine::HttpRequest.new(url).send method.to_sym, :body => params
     #TODO check response
   end
 
@@ -112,7 +112,8 @@ class DealCheckDaemon
 
     start_succ_deal_fetcher
     start_succ_deal_processor
-
+#  rescue => e
+#    puts e.inspect
   end
 
   def start_succ_deal_fetcher
@@ -121,7 +122,7 @@ class DealCheckDaemon
 
   def start_succ_deal_processor
     if @suc_deal_fetcher
-      @deal_processor = DealProcessor.new @suc_deal_fetcher
+      @deal_processor = DealProcessor.new @suc_deal_fetcher, self
     else
       log "Please start SuccDealFetcher"
     end
@@ -154,7 +155,7 @@ class DealCheckDaemon
 
 
   def send_to_server(deal_id, user_id, status)
-    notify_rails "deals/#{deal_id}/report", user_id: user_id, status: status
+    notify_rails "deals/#{deal_id}/report", :post, user_id: user_id, status: status
   end
 
 end
@@ -233,13 +234,18 @@ class SuccDealFetcher
     deal
   end
 
+  def remove_deal(deal_id)
+    @deals.delete_if {|c_deal_id| c_deal_id == deal_id }
+  end
+
 end
 
 
 class DealProcessor
-  def initialize(fetcher)
+  def initialize(fetcher, parent)
     raise "Please add fetcher" unless fetcher
     @fetcher = fetcher
+    @parent = parent
     @timer = false
     @timer_delay = 5.seconds
     fetch_new
@@ -250,8 +256,13 @@ class DealProcessor
     return false if @timer
     deal = @fetcher.get_random_deal
     if deal
-      process_deal deal
-      deal.touch
+      follow = process_deal deal
+      if follow
+        deal.touch
+      else
+        send_to_server deal.id
+      end
+      @fetcher.remove_deal deal.id
     else
       log "No deals"
     end
@@ -266,8 +277,13 @@ class DealProcessor
     user = sdeal.user
     target = {:uid => deal.target.uid, :type => deal.target_type }
     user = {:id => user.id, :uid => user.uid, :token => user.token}
-    follow = FollowerCheck.new(target, user).perform
-    puts follow
+    FollowerCheck.new(target, user).perform
+  end
+
+  def send_to_server(deal_id)
+    @parent.notify_rails "success_user_deals/#{deal_id}", :delete
+  rescue => e
+    puts e
   end
 
 end
