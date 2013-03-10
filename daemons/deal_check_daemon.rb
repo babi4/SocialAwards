@@ -5,6 +5,12 @@ require_relative "../app/models/vkclient.rb"#TODO to services
 Bundler.require :daemons
 
 
+def log(*args)
+  puts "[#{Time.now.to_f.to_s.ljust(18)} || #{Time.now.to_s}] #{args.join(' ')}"
+end
+
+
+
 module DaemonMixin
 
   def init_rails_notifier
@@ -34,18 +40,15 @@ module DaemonMixin
     #TODO check response
   end
 
-  def log(*args)
-    puts "[#{Time.now.to_f.to_s.ljust(18)} || #{Time.now.to_s}] #{args.join(' ')}"
-  end
 
 
   def establish_connection(params)
 #    @connections = EventMachine::Synchrony::ConnectionPool.new(size: 5) do
 #        ActiveRecord::Base.establish_connection params
 #    end
-    @connections = ActiveRecord::Base.establish_connection params
+    connections = ActiveRecord::Base.establish_connection params
     ActiveRecord::Base.logger = Logger.new(STDOUT) #TODO set level
-    @connections.connection.execute("SELECT 1") #FOR TEST
+    connections.connection.execute("SELECT 1") #FOR TEST
   end
   
   #TODO UNUSED
@@ -58,13 +61,18 @@ end
 
 class Deal < ActiveRecord::Base
   attr_accessible :body, :title, :action_type, :url
-#  belongs_to :target, :polymorphic => true
+  belongs_to :target, :polymorphic => true
 end
 
 class SuccessUserDeal < ActiveRecord::Base
   attr_accessible :user, :deal
   belongs_to :user
   belongs_to :deal
+end
+
+class Person < ActiveRecord::Base
+  attr_accessible :uid, :first_name, :last_name, :nickname, :sex, :bdate, :screen_name
+  has_one :deals, :as => :target
 end
 
 class User < ActiveRecord::Base
@@ -100,10 +108,10 @@ class DealCheckDaemon
     end
 
     connect_to_db
+    log "Started"
+
     start_succ_deal_fetcher
     start_succ_deal_processor
-
-    log "Started"
 
   end
 
@@ -112,7 +120,11 @@ class DealCheckDaemon
   end
 
   def start_succ_deal_processor
-    
+    if @suc_deal_fetcher
+      @deal_processor = DealProcessor.new @suc_deal_fetcher
+    else
+      log "Please start SuccDealFetcher"
+    end
   end
 
 
@@ -157,7 +169,7 @@ class FollowerCheck
     if @target[:type] == 'Person'
       person_follow_check
     else
-      puts "Not implemented"
+      log "Not implemented"
       false
     end
 
@@ -195,15 +207,69 @@ class SuccDealFetcher
   def fetch
     return false if @timer
     @deals = SuccessUserDeal.select(:id).where("updated_at < ?", @timer_delay.ago).map(&:id)
-    puts @deals.inspect
     if @deals.empty?
       @timer = EM::Synchrony.add_timer @timer_delay do
         @timer = false
         fetch
       end
     end
-  end  
-  
+  end
+
+  def get_random_deal
+    return nil if @deals.empty?
+    deal_id = @deals[rand @deals.length]
+    fetch_deal deal_id
+  end
+
+  def fetch_deal(deal_id)
+    deal = false
+    SuccessUserDeal.transaction do
+       deal = SuccessUserDeal.
+          where("id = ? and updated_at < ?", deal_id,  @timer_delay.ago).
+          lock(true).
+          includes(:deal => {:target => {}}, :user => {}). #TODO do not include
+          first
+    end
+    deal
+  end
+
+end
+
+
+class DealProcessor
+  def initialize(fetcher)
+    raise "Please add fetcher" unless fetcher
+    @fetcher = fetcher
+    @timer = false
+    @timer_delay = 5.seconds
+    fetch_new
+  end
+
+
+  def fetch_new
+    return false if @timer
+    deal = @fetcher.get_random_deal
+    if deal
+      process_deal deal
+      deal.touch
+    else
+      log "No deals"
+    end
+    @timer = EM::Synchrony.add_timer @timer_delay do
+      @timer = false
+      fetch_new
+    end
+  end
+
+  def process_deal sdeal
+    deal = sdeal.deal
+    user = sdeal.user
+    target = {:uid => deal.target.uid, :type => deal.target_type }
+    user = {:id => user.id, :uid => user.uid, :token => user.token}
+    follow = FollowerCheck.new(target, user).perform
+    puts follow
+  end
+
 end
 
 EM.synchrony do
